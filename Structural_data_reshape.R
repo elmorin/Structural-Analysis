@@ -35,3 +35,27 @@ Tissue_reshape$Delta_ICV <- Tissue_reshape$ICV.12mo - Tissue_reshape$ICV.3mo
 Tissue_reshape$Delta_GM <- Tissue_reshape$GM.12mo - Tissue_reshape$GM.3mo
 Tissue_reshape$Delta_WM <- Tissue_reshape$WM.12mo - Tissue_reshape$WM.3mo
 write.csv(Tissue_reshape, 'Tissue_final.csv')
+
+#Label 2 - GM
+label_2_subjects_ages <- as.matrix(t(as.data.frame(str_split(Label_2[,1], "_", n=3))))
+label_2_dataset <- as.data.frame(cbind(label_2_subjects_ages[,1:2],Label_2[,3:30]))
+colnames(label_2_dataset) <- c('Subject','Age','R_Occipital','R_Temporal_Auditory', 
+              'R_Subcortical','R_Frontal','R_Cerebellum', 'R_Insula','R_Cingulate','R_Parietal',
+              'R_Prefrontal','R_Corpus_Callosum','R_Temporal_Visual','R_Temporal_Limbic',
+              'R_Pons_Medulla','L_Occipital','L_Temporal_Auditory','L_Subcortical','L_Frontal',
+              'L_Cerebellum','L_Insula','L_Cingulate','L_Parietal','L_Prefrontal','L_Corpus_Callosum',
+              'L_Temporal_Visual','L_Temporal_Limbic','L_Pons_Medulla','R_Lat_Ventricle',
+              'L_Lat_Ventricle')
+label_2_reshape <- reshape(label_2_dataset, idvar="Subject", timevar = "Age", direction="wide")
+rownames(label_2_reshape) <- NULL
+write.csv(label_2_reshape, 'Label_2_GM_final.csv')
+
+
+#Subcortical
+subcort_subjects_ages <- as.matrix(t(as.data.frame(str_split(Subcortical[,1], "_", n=3))))
+subcort_dataset <- as.data.frame(cbind(subcort_subjects_ages[,1:2],Subcortical[,3:10]))
+colnames(subcort_dataset)<- c('Subject','Age','R_Hippocampus','R_Amygdala','R_Caudate','R_Putamen',
+                              'L_Hippocampus','L_Amygdala','L_Caudate','L_Putamen')
+subcort_reshape <- reshape(subcort_dataset, idvar="Subject", timevar = "Age", direction="wide")
+rownames(subcort_reshape) <- NULL
+write.csv(subcort_reshape, 'Subcortical_GM_final.csv')
