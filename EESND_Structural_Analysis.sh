@@ -37,6 +37,6 @@ cd ${OUTPUT}
 mv Volume*.csv Raw_data/
 mv TissueSegVolume.csv Raw_data/
 
-mv *final.csv Final_data/
+mv *final*.csv Final_data/
 
 echo 'Analysis Executed Cleanly'
