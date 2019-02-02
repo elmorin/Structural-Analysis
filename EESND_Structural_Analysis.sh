@@ -35,12 +35,13 @@ Rscript Structural_data_reshape.R
 
 cd ${OUTPUT}
 
-mkdir Raw_data/$1/
-mkdir Final_data/$1/
+folder_name="${USER}--$(date +%Y-%m-%d)"
+mkdir Raw_data/"$folder_name"
+mkdir Final_data/"$folder_name"
 
-mv Volume*.csv Raw_data/$1/
-mv TissueSegVolume.csv Raw_data/$1/
+mv Volume*.csv Raw_data/"$folder_name"/
+mv TissueSegVolume.csv Raw_data/"$folder_name"/
 
-mv *final*.csv Final_data/$1/
+mv *final*.csv Final_data/"$folder_name"/
 
 echo 'Analysis Executed Cleanly'
