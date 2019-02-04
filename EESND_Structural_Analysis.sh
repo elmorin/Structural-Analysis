@@ -25,7 +25,9 @@ sed -n 7p AutoSeg_*_label_2.csv >> ${OUTPUT}/Volume_Label_2.csv
 sed -n 7p AutoSeg_*_label_3.csv >> ${OUTPUT}/Volume_Label_3.csv
 sed -n 7p AutoSeg_*_label_4.csv >> ${OUTPUT}/Volume_Label_4.csv
 sed -n 7p AutoSeg_*_label_5.csv >> ${OUTPUT}/Volume_Label_5.csv
-sed -n 7p AutoSeg_*2018_Volume.csv >> ${OUTPUT}/Volume_Subcort_new.csv
+#sed -n 7p AutoSeg_*2018_Volume.csv >> ${OUTPUT}/Volume_Subcort_new.csv
+#Most updated edited Subcortical label files
+sed -n 7p AutoSeg_*05232018_Volume.csv >> ${OUTPUT}/Volume_Subcort_new.csv
 
 done
 
