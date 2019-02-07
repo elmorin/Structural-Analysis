@@ -14,6 +14,6 @@ This script pulls the individual subject raw data from the nested AutoSeg output
 2. From anywhere, run the script, providing the path to the folder you created with the final runs, and the project:
 
 For example:
-./projects/sanchez_share/scripts/AutoSeg-Structural-Analysis/EESND_Structural_Analysis.sh /projects/sanchez_share/AutoSeg_EESND/Final_runs EESND
+bash /projects/sanchez_share/scripts/AutoSeg-Structural-Analysis/EESND_Structural_Analysis.sh /projects/sanchez_share/AutoSeg_EESND/Final_runs EESND
 
 Your raw data .csv files and final data files will be placed in the appropriate folders in the /projects/sanchez_share/structural_analyses folder.
