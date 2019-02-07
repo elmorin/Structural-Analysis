@@ -1,7 +1,7 @@
 #! /bin/bash
 
 PROJECTDIR=$1
-OUTPUT="/projects/sanchez_share/scripts/Structural_Analysis"
+OUTPUT="/projects/sanchez_share/scripts/AutoSeg-Structural-Analysis"
 
 # Start processing loop
 
