@@ -1,7 +1,8 @@
 #! /bin/bash
 
 PROJECTDIR=$1
-OUTPUT="/projects/sanchez_share/scripts/AutoSeg-Structural-Analysis"
+PROJ=$2
+OUTPUT="/projects/sanchez_share/structural_analyses"
 
 # Start processing loop
 
@@ -30,16 +31,19 @@ done
 
 cd ${OUTPUT}
 
-Rscript Structural_data_reshape.R
+Rscript /projects/sanchez_share/scripts/AutoSeg-Structural-Analysis/Structural_data_reshape.R
 
 cd ${OUTPUT}
 
-folder_name="${USER}--$(date +%Y-%m-%d)"
+folder_name="${USER}--$(date +%Y-%m-%d)--${PROJ}"
 mkdir Raw_data/"$folder_name"
 mkdir Final_data/"$folder_name"
 
 mv Volume*.csv Raw_data/"$folder_name"/
 mv TissueSegVolume.csv Raw_data/"$folder_name"/
+cp ${OUTPUT}/subjects.txt Raw_data/"$folder_name"/
+mv ${OUTPUT}/subjects.txt Final_data/"$folder_name"
+
 
 mv *final*.csv Final_data/"$folder_name"/
 
