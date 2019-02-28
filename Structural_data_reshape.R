@@ -12,6 +12,7 @@ Label_2 <- read.csv('Volume_Label_2.csv', header=F)
 Label_3 <- read.csv('Volume_Label_3.csv', header=F)
 Label_4 <- read.csv('Volume_Label_4.csv', header=F)
 Label_5 <- read.csv('Volume_Label_5.csv', header=F)
+Paxinos <- read.csv('Paxinos.csv', header=F)
 Subcortical <- read.csv('Volume_Subcort_new.csv', header=F)
 
 #Tissue
@@ -48,7 +49,7 @@ colnames(label_2_dataset) <- c('Subject','Age','R_Occipital','R_Temporal_Auditor
                                'L_Lat_Ventricle')
 label_2_reshape <- reshape(label_2_dataset, idvar="Subject", timevar = "Age", direction="wide")
 rownames(label_2_reshape) <- NULL
-write.csv(label_2_reshape, 'Label_2_GM_final_rmANOVA.csv')
+write.csv(label_2_reshape, 'Label_2_GM_final_rmANOVA.csv', row.names = FALSE)
 
 #Label 2 - GM - MLM
 label_2_subjects_ages <- as.matrix(t(as.data.frame(str_split(Label_2[,1], "_", n=3))))
@@ -75,7 +76,7 @@ Left_names <- cbind(label_2_dataset[,1:2], Sex,Left)
 colnames(Left_names)[1:3] <- c("Subject","Age","Sex")
 label_2_MLM <- rbind(Right_names, Left_names)
 label_2_MLM_sort <- label_2_MLM[order(label_2_MLM$Subject),] 
-write.csv(label_2_MLM_sort, 'Label_2_GM_final_MLM.csv')
+write.csv(label_2_MLM_sort, 'Label_2_GM_final_MLM.csv', row.names = FALSE)
 
 #Subcortical - rmANOVA
 subcort_subjects_ages <- as.matrix(t(as.data.frame(str_split(Subcortical[,1], "_", n=3))))
@@ -84,7 +85,7 @@ colnames(subcort_dataset)<- c('Subject','Age','R_Hippocampus','R_Amygdala','R_Ca
                               'L_Hippocampus','L_Amygdala','L_Caudate','L_Putamen')
 subcort_reshape <- reshape(subcort_dataset, idvar="Subject", timevar = "Age", direction="wide")
 rownames(subcort_reshape) <- NULL
-write.csv(subcort_reshape, 'Subcortical_GM_final_rmANOVA.csv')
+write.csv(subcort_reshape, 'Subcortical_GM_final_rmANOVA.csv', row.names = FALSE)
 
 #Subcortical - MLM
 subcort_subjects_ages <- as.matrix(t(as.data.frame(str_split(Subcortical[,1], "_", n=3))))
@@ -108,4 +109,48 @@ Left_sc_names <- cbind(subcort_dataset[,1:2], Sex,Left_sc)
 colnames(Left_sc_names)[1:3] <- c("Subject","Age","Sex")
 subcort_MLM <- rbind(Right_sc_names, Left_sc_names)
 subcort_MLM_sort <- subcort_MLM[order(subcort_MLM$Subject),] 
-write.csv(subcort_MLM_sort, 'Subcortical_GM_final_MLM.csv')
+write.csv(subcort_MLM_sort, 'Subcortical_GM_final_MLM.csv', row.names = FALSE)
+
+
+#Paxinos - rmANOVA
+Paxinos_subjects_ages <- as.matrix(t(as.data.frame(str_split(Paxinos[,1], "_", n=3))))
+Paxinos_nozeroes <- cbind(Paxinos[,1:18],Paxinos[,103:118])
+Paxinos_dataset <- as.data.frame(cbind(Paxinos_subjects_ages[,1:2],Paxinos_nozeroes[,3:34]))
+colnames(Paxinos_dataset) <- c('Subject','Age','Left 11','Left 13','Left 14','Left 47 (old 12)',
+                               'Left 8','Left 45','Left 32','Left 25','Left OPAI','Left Opro',
+                               'Left 24','Left 9','Left 10','Left 46','Left Nacc','Left 6/32',
+                               'Right 11','Right 13','Right 14','Right 47 (old 12)',
+                               'Right 8','Right 45','Right 32','Right 25','Right OPAI','Right Opro',
+                               'Right 24','Right 9','Right 10','Right 46','Right Nacc','Right 6//32')
+Paxinos_reshape <- reshape(Paxinos_dataset, idvar="Subject", timevar = "Age", direction="wide")
+rownames(Paxinos_reshape) <- NULL
+write.csv(Paxinos_reshape, 'Paxinos_GM_final_rmANOVA.csv', row.names = FALSE)
+
+#Paxinos - GM - MLM
+Paxinos_subjects_ages <- as.matrix(t(as.data.frame(str_split(Paxinos[,1], "_", n=3))))
+Paxinos_nozeroes <- cbind(Paxinos[,1:18],Paxinos[,103:118])
+Paxinos_dataset <- as.data.frame(cbind(Paxinos_subjects_ages[,1:2],Paxinos_nozeroes[,3:34]))
+rownames(Paxinos_dataset) <- NULL
+Right <- Paxinos_dataset[,19:34]
+colnames(Right) <- c('11','13','14','47 (old 12)',
+                     '8','45','32','25','OPAI','Opro',
+                     '24','9','10','46','Nacc','6//32')
+Hemisphere <- as.data.frame(rep("Right",nrow(Right)))
+Right <- cbind(Hemisphere,Right)
+colnames(Right)[1] <- "Hemisphere"
+Sex <- as.data.frame(rep("Sex",nrow(Right)))
+Right_names <- cbind(Paxinos_dataset[,1:2], Sex,Right) 
+colnames(Right_names)[1:3] <- c("Subject","Age","Sex")
+Left <- Paxinos_dataset[,3:18]
+colnames(Left) <- c('11','13','14','47 (old 12)',
+                    '8','45','32','25','OPAI','Opro',
+                    '24','9','10','46','Nacc','6//32')
+Hemisphere <- as.data.frame(rep("Left",nrow(Left)))
+Left <- cbind(Hemisphere,Left)
+colnames(Left)[1] <- "Hemisphere"
+Left_names <- cbind(Paxinos_dataset[,1:2], Sex,Left) 
+colnames(Left_names)[1:3] <- c("Subject","Age","Sex")
+Paxinos_MLM <- rbind(Right_names, Left_names)
+Paxinos_MLM_sort <- Paxinos_MLM[order(Paxinos_MLM$Subject),] 
+write.csv(Paxinos_MLM_sort, 'Paxinos_GM_final_MLM.csv', row.names = FALSE)
+
