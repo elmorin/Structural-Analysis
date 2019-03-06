@@ -78,6 +78,48 @@ label_2_MLM <- rbind(Right_names, Left_names)
 label_2_MLM_sort <- label_2_MLM[order(label_2_MLM$Subject),] 
 write.csv(label_2_MLM_sort, 'Label_2_GM_final_MLM.csv', row.names = FALSE)
 
+#Label 1 - WM - rmANOVA
+label_1_subjects_ages <- as.matrix(t(as.data.frame(str_split(Label_1[,1], "_", n=3))))
+label_1_dataset <- as.data.frame(cbind(label_1_subjects_ages[,1:2],Label_1[,3:30]))
+colnames(label_1_dataset) <- c('Subject','Age','R_Occipital','R_Temporal_Auditory', 
+                               'R_Subcortical','R_Frontal','R_Cerebellum', 'R_Insula','R_Cingulate','R_Parietal',
+                               'R_Prefrontal','R_Corpus_Callosum','R_Temporal_Visual','R_Temporal_Limbic',
+                               'R_Pons_Medulla','L_Occipital','L_Temporal_Auditory','L_Subcortical','L_Frontal',
+                               'L_Cerebellum','L_Insula','L_Cingulate','L_Parietal','L_Prefrontal','L_Corpus_Callosum',
+                               'L_Temporal_Visual','L_Temporal_Limbic','L_Pons_Medulla','R_Lat_Ventricle',
+                               'L_Lat_Ventricle')
+label_1_reshape <- reshape(label_1_dataset, idvar="Subject", timevar = "Age", direction="wide")
+rownames(label_1_reshape) <- NULL
+write.csv(label_1_reshape, 'Label_1_WM_final_rmANOVA.csv', row.names = FALSE)
+
+#Label 1 - WM - MLM
+label_1_subjects_ages <- as.matrix(t(as.data.frame(str_split(Label_1[,1], "_", n=3))))
+label_1_dataset <- as.data.frame(cbind(label_1_subjects_ages[,1:2],Label_1[,3:30]))
+rownames(label_1_dataset) <- NULL
+Right <- label_1_dataset[,3:15]
+Right <- cbind(Right, label_1_dataset[,29])
+colnames(Right) <- c('Occipital','Temporal_Auditory', 'Subcortical','Frontal','Cerebellum', 'Insula','Cingulate','Parietal',
+                     'Prefrontal','Corpus_Callosum','Temporal_Visual','Temporal_Limbic','Pons_Medulla','Lat_Ventricle')
+Hemisphere <- as.data.frame(rep("Right",nrow(Right)))
+Right <- cbind(Hemisphere,Right)
+colnames(Right)[1] <- "Hemisphere"
+Sex <- as.data.frame(rep("Sex",nrow(Right)))
+Right_names <- cbind(label_1_dataset[,1:2], Sex,Right) 
+colnames(Right_names)[1:3] <- c("Subject","Age","Sex")
+Left <- label_1_dataset[,16:28]
+Left <- cbind(Left, label_1_dataset[,30])
+colnames(Left) <- c('Occipital','Temporal_Auditory', 'Subcortical','Frontal','Cerebellum', 'Insula','Cingulate','Parietal',
+                    'Prefrontal','Corpus_Callosum','Temporal_Visual','Temporal_Limbic','Pons_Medulla','Lat_Ventricle')
+Hemisphere <- as.data.frame(rep("Left",nrow(Left)))
+Left <- cbind(Hemisphere,Left)
+colnames(Left)[1] <- "Hemisphere"
+Left_names <- cbind(label_1_dataset[,1:2], Sex,Left) 
+colnames(Left_names)[1:3] <- c("Subject","Age","Sex")
+label_1_MLM <- rbind(Right_names, Left_names)
+label_1_MLM_sort <- label_1_MLM[order(label_1_MLM$Subject),] 
+write.csv(label_1_MLM_sort, 'Label_1_WM_final_MLM.csv', row.names = FALSE)
+
+
 #Subcortical - rmANOVA
 subcort_subjects_ages <- as.matrix(t(as.data.frame(str_split(Subcortical[,1], "_", n=3))))
 subcort_dataset <- as.data.frame(cbind(subcort_subjects_ages[,1:2],Subcortical[,3:10]))
